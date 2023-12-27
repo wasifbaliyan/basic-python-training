@@ -1,21 +1,18 @@
 import csv
 
-# Write
-with open("data.csv", "w") as f:
-    writer = csv.writer(f)
 
-    writer.writerow(["Name", "Age", "Education"])
-    writer.writerow(["John", "23", "Graduate"])
-    writer.writerow(["Jake", "26", "PG"])
+# Read from one file and write other file
+with open("sample_data.csv") as source, open("target.csv", "w") as target:
+    reader = csv.reader(source)
+    writer = csv.writer(target)
 
-# Read
-with open("data.csv") as file:
-    reader = csv.reader(file)
-    rows = list(reader)[1:]
+    data_list = list(reader)[1:]
+    target_list = []
+    target_list.append(['Data_value', 'STATUS', 'UNITS', 'Magnitude', 'Subject',
+                        'Group'])
+    for row in data_list:
+        a, b, C, d, E, F, G, H, I, *other = row
+        target_row = [C, E, F, G, H, I]
+        target_list.append(target_row)
 
-    total_age = 0
-    for row in rows:
-        print(row)
-        total_age += int(row[1])
-
-    print(total_age//len(rows))
+    writer.writerows(target_list)
